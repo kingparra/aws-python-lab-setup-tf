@@ -14,7 +14,7 @@ resource "aws_instance" "checkmk" {
 
 resource "aws_instance" "windows" {
   tags = { Name = "windows" }
-  ami                    = data.aws_ami.ubuntu.id
+  ami                    = data.aws_ami.windows_server_2022.id
   instance_type          = "t2.micro"
   vpc_security_group_ids = [module.windows_sg.id]
   subnet_id = module.vpc.public_subnets[0]
