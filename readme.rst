@@ -44,3 +44,31 @@ You can get the ip and port with::
 To go to the Cloud9 environment, visit the url from the output::
 
   $ firefox "$(terraform output -raw cloud9_url)"
+
+
+Connecting to the instances using Session Manager
+-------------------------------------------------
+If you prefer, you can use SSM to connect to the instances.
+Example for the windows instance::
+
+  ∿ windows_instance_id=$(aws ec2 describe-instances --query "Reservations[].Instances[?Tags[?Key=='Name' && Value=='windows']][].InstanceId" --output text)
+
+  ∿ aws ssm start-session --target i-0051e243e659b7392
+  Starting session with SessionId: chris-student-0e70e3dc015638ff4
+  Windows PowerShell
+  Copyright (C) Microsoft Corporation. All rights reserved.
+  Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+  PS C:\Windows\system32>
+
+For the ubuntu instance, you can use this command to get the AMI.
+(Or you can copy it from the web console).
+
+::
+
+  ∿ checkmk_instance_id=$(aws ec2 describe-instances --query "Reservations[].Instances[?Tags[?Key=='Name' && Value=='checkmk']][].InstanceId" --output text)
+
+  ∿ aws ssm start-session --target $checkmk_instance_id 
+  Starting session with SessionId: chris-student-0ef1aaacfe52c4a64
+  $ cat /etc/os-release
+  PRETTY_NAME="Ubuntu 22.04.3 LTS"
+  NAME="Ubuntu"
