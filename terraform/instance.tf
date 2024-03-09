@@ -7,7 +7,8 @@ resource "aws_instance" "checkmk" {
   iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
   key_name = aws_key_pair.key.key_name
   user_data              = <<-EOF
-  apt install https://download.checkmk.com/checkmk/2.1.0p18/check-mk-raw-2.1.0p18_0.focal_amd64.deb
+  wget https://download.checkmk.com/checkmk/2.1.0p18/check-mk-raw-2.1.0p18_0.focal_amd64.deb
+  apt install check-mk-raw-2.1.0p18_0.focal_amd64.deb
   omd create ytmonitoring
   omd start ytmonitoring
   EOF
